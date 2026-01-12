@@ -2,6 +2,7 @@ package com.zoma1101.swordskill_extender.init;
 
 import com.zoma1101.swordskill_extender.Swordskill_extender;
 import com.zoma1101.swordskill_extender.item.Proficiency.ProficiencyScrollItem;
+import com.zoma1101.swordskill_extender.item.SkillScrollItem; // 追加
 import com.zoma1101.swordskill_extender.item.weapon.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
@@ -116,6 +117,10 @@ public class ModItems {
 
     public static final RegistryObject<Item> PROFICIENCY_SCROLL = ITEMS.register("proficiency_scroll",
             () -> new ProficiencyScrollItem(new Item.Properties()));
+
+    // ★追加: スキル習得用の巻物
+    public static final RegistryObject<Item> SKILL_SCROLL = ITEMS.register("skill_scroll",
+            () -> new SkillScrollItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

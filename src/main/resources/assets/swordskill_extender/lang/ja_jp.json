@@ -1,11 +1,21 @@
 {
   "block.swordskill_extender.weapon_workbench": "武器作業台",
   "creativetab.swordskill_extender_tab": "ソードスキル拡張",
+  "creativetab.swordskill_extender.scroll_tab": "秘伝の巻物",
+
 
   "tooltip.swordskill_extender.proficiency_scroll.usage": "武器を持ってスニーク右クリックで使用",
   "tooltip.swordskill_extender.proficiency_scroll.amount": "熟練度上昇量: %s",
   "message.swordskill_extender.proficiency_increased": "%sの熟練度が %s 上昇しました！",
   "message.swordskill_extender.skill_unlocked": "スキル習得！: %s",
+
+  "item.swordskill_extender.skill_scroll": "秘伝の巻物",
+  "tooltip.swordskill_extender.skill_scroll_skill": "習得可能スキル: %s",
+  "tooltip.swordskill_extender.skill_scroll_empty": "スキルが記録されていません",
+  "message.swordskill_extender.scroll_invalid": "この巻物は無効です。",
+  "message.swordskill_extender.skill_not_found": "スキルが見つかりません。",
+  "message.swordskill_extender.skill_already_unlocked": "スキル「%s」は既に習得しています。",
+
 
   "weapon_type.swordskill_extender.greatsword": "大剣",
   "weapon_type.swordskill_extender.spear": "槍",
@@ -24,6 +34,8 @@
   "gui.swordskill_extender.req_proficiency": "習得に必要な熟練度:",
   "gui.swordskill_extender.req_proficiency_format": "%s: %s",
   "gui.swordskill_extender.requirement": "習得条件",
+
+
 
   "item.swordskill_extender.proficiency_scroll": "熟練度の書",
 

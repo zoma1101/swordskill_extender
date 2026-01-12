@@ -21,6 +21,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
 
         generatedItem(ModItems.PROFICIENCY_SCROLL);
+        generatedItem(ModItems.SKILL_SCROLL);
         // Iron
         greatswordHandheldItem(ModItems.IRON_GREATSWORD);
         spearHandheldItem(ModItems.IRON_SPEAR);

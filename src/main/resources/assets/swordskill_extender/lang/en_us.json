@@ -1,10 +1,20 @@
 {
   "block.swordskill_extender.weapon_workbench": "Weapon Workbench",
   "creativetab.swordskill_extender_tab": "Sword Skill Extender",
+  "creativetab.swordskill_extender.scroll_tab": "Skill Scrolls",
+
 
   "tooltip.swordskill_extender.proficiency_scroll.usage": "Hold a weapon and Sneak + Right Click to use",
   "tooltip.swordskill_extender.proficiency_scroll.amount": "Proficiency Gain: %s",
   "message.swordskill_extender.proficiency_increased": "%s Proficiency Increased by %s!",
+  "message.swordskill_extender.skill_unlocked": "Skill Unlocked!: %s",
+
+  "item.swordskill_extender.skill_scroll": "Skill Scroll",
+  "tooltip.swordskill_extender.skill_scroll_skill": "Unlockable Skill: %s",
+  "tooltip.swordskill_extender.skill_scroll_empty": "No skill recorded",
+  "message.swordskill_extender.scroll_invalid": "This scroll is invalid.",
+  "message.swordskill_extender.skill_not_found": "Skill not found.",
+  "message.swordskill_extender.skill_already_unlocked": "Skill '%s' is already unlocked.",
 
   "weapon_type.swordskill_extender.greatsword": "Greatsword",
   "weapon_type.swordskill_extender.spear": "Spear",
