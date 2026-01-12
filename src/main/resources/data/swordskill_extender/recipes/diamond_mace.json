@@ -1,0 +1,21 @@
+{
+  "type": "swordskill_extender:weapon_crafting",
+  "icon": "swordskill_extender:textures/icon/weapon_type/mace.png",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond",
+      "count": 4
+    },
+    {
+      "item": "minecraft:amethyst_shard",
+      "count": 3
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 2
+    }
+  ],
+  "result": {
+    "item": "swordskill_extender:diamond_mace"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "swordskill_extender:block/weapon_workbench"
+    }
+  }
+}

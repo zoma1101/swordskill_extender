@@ -1,0 +1,21 @@
+{
+  "type": "swordskill_extender:weapon_crafting",
+  "icon": "swordskill_extender:textures/icon/weapon_type/greatsword.png",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot",
+      "count": 64
+    },
+    {
+      "item": "minecraft:gold_ingot",
+      "count": 64
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 4
+    }
+  ],
+  "result": {
+    "item": "swordskill_extender:gold_greatsword"
+  }
+}

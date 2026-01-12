@@ -1,0 +1,29 @@
+{
+  "type": "swordskill_extender:weapon_crafting",
+  "icon": "swordskill_extender:textures/icon/weapon_type/rapier.png",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_ingot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:diamond",
+      "count": 2
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 1
+    },
+    {
+      "item": "minecraft:iron_nugget",
+      "count": 12
+    },
+    {
+      "item": "minecraft:netherite_upgrade_smithing_template",
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "swordskill_extender:netherite_rapier"
+  }
+}

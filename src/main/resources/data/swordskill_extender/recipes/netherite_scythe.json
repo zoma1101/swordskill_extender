@@ -1,0 +1,25 @@
+{
+  "type": "swordskill_extender:weapon_crafting",
+  "icon": "swordskill_extender:textures/icon/weapon_type/scythe.png",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond",
+      "count": 3
+    },
+    {
+      "item": "minecraft:crimson_fence",
+      "count": 2
+    },
+    {
+      "item": "minecraft:netherite_ingot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:netherite_upgrade_smithing_template",
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "swordskill_extender:netherite_scythe"
+  }
+}

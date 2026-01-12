@@ -1,0 +1,17 @@
+{
+  "type": "swordskill_extender:weapon_crafting",
+  "icon": "swordskill_extender:textures/icon/weapon_type/dagger.png",
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 1
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "swordskill_extender:stone_dagger"
+  }
+}

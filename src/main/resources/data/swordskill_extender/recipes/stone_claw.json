@@ -1,0 +1,17 @@
+{
+  "type": "swordskill_extender:weapon_crafting",
+  "icon": "swordskill_extender:textures/icon/weapon_type/claw.png",
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone",
+      "count": 2
+    },
+    {
+      "item": "minecraft:stick",
+      "count": 2
+    }
+  ],
+  "result": {
+    "item": "swordskill_extender:stone_claw"
+  }
+}
