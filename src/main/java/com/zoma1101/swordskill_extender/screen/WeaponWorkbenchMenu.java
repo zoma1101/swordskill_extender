@@ -22,38 +22,35 @@ public class WeaponWorkbenchMenu extends AbstractContainerMenu {
 
     public WeaponWorkbenchMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.WEAPON_WORKBENCH_MENU.get(), pContainerId);
-        checkContainerSize(inv, 7);
+        // スロット数チェック: 25入力 + 1出力 = 26
+        checkContainerSize(inv, 26);
         blockEntity = ((WeaponWorkbenchBlockEntity) entity);
         this.data = data;
 
-        addSlotListener(new ContainerListener() {
-            @Override
-            public void slotChanged(AbstractContainerMenu pContainerToSend, int pSlotInd, ItemStack pStack) {}
-            @Override
-            public void dataChanged(AbstractContainerMenu pContainerMenu, int pSlotId, int pValue) {}
-        });
-
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            // 入力スロット (6つ)
-            this.addSlot(new SlotItemHandler(handler, 0, 97, 16));
-            this.addSlot(new SlotItemHandler(handler, 1, 97, 35));
-            this.addSlot(new SlotItemHandler(handler, 2, 97, 54));
-            this.addSlot(new SlotItemHandler(handler, 3, 116, 16));
-            this.addSlot(new SlotItemHandler(handler, 4, 116, 35));
-            this.addSlot(new SlotItemHandler(handler, 5, 116, 54));
+            // --- 5x5 入力スロット (インデックス 0-24) ---
+            // GUI上の開始位置 (テクスチャに合わせて調整してください)
+            int gridStartX = 14;
+            int gridStartY = 18;
 
-            // ★変更: 出力スロット (1つ)
-            // ここで onTake をオーバーライドして、アイテム取得時に素材を消費させる
-            this.addSlot(new SlotItemHandler(handler, 6, 142, 54) {
+            for (int row = 0; row < 5; row++) {
+                for (int col = 0; col < 5; col++) {
+                    // addSlotで座標を指定するだけで、アイテムの配置・操作が可能になります
+                    this.addSlot(new SlotItemHandler(handler, col + row * 5, gridStartX + col * 18, gridStartY + row * 18));
+                }
+            }
+
+            // --- 出力スロット (インデックス 25) ---
+            // グリッドの右側に配置
+            this.addSlot(new SlotItemHandler(handler, 25, 128, 54) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return false; // プレイヤーはこのスロットにアイテムを置けない
+                    return false; // プレイヤーはここに置けない
                 }
 
                 @Override
                 public void onTake(Player player, ItemStack stack) {
-                    // アイテムを取り出した時に BlockEntity の craftItem を呼ぶ
-                    blockEntity.craftItem();
+                    blockEntity.craftItem(); // 取り出し時にクラフト処理を実行
                     super.onTake(player, stack);
                 }
             });
@@ -61,22 +58,21 @@ public class WeaponWorkbenchMenu extends AbstractContainerMenu {
 
         addDataSlots(data);
 
-        addPlayerInventory(inv);
-        addPlayerHotbar(inv);
+        // 5x5グリッドで縦に長くなるため、プレイヤーインベントリの位置を下にずらします
+        // yOffset: 122 (調整値)
+        addPlayerInventory(inv, 122);
+        addPlayerHotbar(inv, 180);
     }
 
     public int getSelectedWeaponId() {
         return this.data.get(0);
     }
 
-    private static final int HOTBAR_SLOT_COUNT = 9;
-    private static final int PLAYER_INVENTORY_ROW_COUNT = 3;
-    private static final int PLAYER_INVENTORY_COLUMN_COUNT = 9;
-    private static final int PLAYER_INVENTORY_SLOT_COUNT = PLAYER_INVENTORY_COLUMN_COUNT * PLAYER_INVENTORY_ROW_COUNT;
-    private static final int VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT;
+    // Shiftクリック（クイックムーブ）のロジック
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
+    private static final int VANILLA_SLOT_COUNT = 36;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
-    private static final int TE_INVENTORY_SLOT_COUNT = 7;
+    private static final int TE_INVENTORY_SLOT_COUNT = 26; // 25 + 1
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
@@ -85,11 +81,15 @@ public class WeaponWorkbenchMenu extends AbstractContainerMenu {
         ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
 
+        // プレイヤーインベントリ -> 作業台
         if (index < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
-            if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT, false)) {
+            // 出力スロット(最後)には移動させないため -1
+            if (!moveItemStackTo(sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT - 1, false)) {
                 return ItemStack.EMPTY;
             }
-        } else if (index < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
+        }
+        // 作業台 -> プレイヤーインベントリ
+        else if (index < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
             if (!moveItemStackTo(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
                 return ItemStack.EMPTY;
             }
@@ -112,17 +112,17 @@ public class WeaponWorkbenchMenu extends AbstractContainerMenu {
                 pPlayer, ModBlocks.WEAPON_WORKBENCH.get());
     }
 
-    private void addPlayerInventory(Inventory playerInventory) {
+    private void addPlayerInventory(Inventory playerInventory, int yOffset) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, yOffset + i * 18));
             }
         }
     }
 
-    private void addPlayerHotbar(Inventory playerInventory) {
+    private void addPlayerHotbar(Inventory playerInventory, int yOffset) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, yOffset));
         }
     }
 }

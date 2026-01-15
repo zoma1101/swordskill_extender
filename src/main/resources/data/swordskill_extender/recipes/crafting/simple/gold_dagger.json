@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "g",
+        "/"
+    ],
+    "key": {
+        "g": "minecraft:gold_ingot",
+        "/": "minecraft:stick"
+    },
+    "result": {
+        "id": "swordskill_extender:gold_dagger",
+        "count": 1
+    }
+}

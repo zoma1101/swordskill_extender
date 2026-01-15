@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "/"
+    ],
+    "key": {
+        "#": "minecraft:cobblestone",
+        "/": "minecraft:stick"
+    },
+    "result": {
+        "id": "swordskill_extender:stone_dagger",
+        "count": 1
+    }
+}

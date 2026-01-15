@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "  #",
+        "G# ",
+        "/G "
+    ],
+    "key": {
+        "#": "minecraft:diamond",
+        "G": "minecraft:gold_nugget",
+        "/": "minecraft:stick"
+    },
+    "result": {
+        "id": "swordskill_extender:diamond_katana",
+        "count": 1
+    }
+}

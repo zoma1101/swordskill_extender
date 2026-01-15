@@ -3,6 +3,7 @@ package com.zoma1101.swordskill_extender;
 import com.mojang.logging.LogUtils;
 import com.zoma1101.swordskill_extender.datagen.ModItemModelProvider;
 import com.zoma1101.swordskill_extender.datagen.ModItemTagsProvider;
+import com.zoma1101.swordskill_extender.datagen.ModRecipeProvider;
 import com.zoma1101.swordskill_extender.init.*;
 import com.zoma1101.swordskill_extender.network.PacketHandler;
 import com.zoma1101.swordskill_extender.recipe.ModRecipes;
@@ -51,6 +52,7 @@ public class Swordskill_extender {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
 
         BlockTagsProvider blockTagsProvider = new BlockTagsProvider(packOutput, lookupProvider, MODID, existingFileHelper) {
             @Override

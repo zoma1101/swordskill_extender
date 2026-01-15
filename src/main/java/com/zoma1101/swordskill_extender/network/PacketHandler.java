@@ -3,14 +3,18 @@ package com.zoma1101.swordskill_extender.network;
 import com.zoma1101.swordskill_extender.Swordskill_extender;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
+
+
 public class PacketHandler {
     private static SimpleChannel INSTANCE;
     private static int packetId = 0;
+
     private static int id() {
         return packetId++;
     }
@@ -25,25 +29,19 @@ public class PacketHandler {
 
         INSTANCE = net;
 
-        // 既存のパケット
+        // アニメーション再生パケットの登録
+        net.messageBuilder(S2CPlayAnimationPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(S2CPlayAnimationPacket::new)
+                .encoder(S2CPlayAnimationPacket::encode)
+                .consumerMainThread(S2CPlayAnimationPacket::handle)
+                .add();
+
+        // ★追加: 熟練度同期パケットの登録
+        // これが登録されていないため、ワールドに入った瞬間にエラーで弾かれていました
         net.messageBuilder(ClientboundWeaponProficiencySyncPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ClientboundWeaponProficiencySyncPacket::new)
                 .encoder(ClientboundWeaponProficiencySyncPacket::encode)
                 .consumerMainThread(ClientboundWeaponProficiencySyncPacket::handle)
-                .add();
-
-        // サーバーへのアンロック要求パケット
-        net.messageBuilder(ServerboundUnlockSkillPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(ServerboundUnlockSkillPacket::new)
-                .encoder(ServerboundUnlockSkillPacket::encode)
-                .consumerMainThread(ServerboundUnlockSkillPacket::handle)
-                .add();
-
-        // ★新規追加: クライアントへのアンロック結果通知パケット
-        net.messageBuilder(ClientboundUnlockSkillResultPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                .decoder(ClientboundUnlockSkillResultPacket::new)
-                .encoder(ClientboundUnlockSkillResultPacket::encode)
-                .consumerMainThread(ClientboundUnlockSkillResultPacket::handle)
                 .add();
     }
 
@@ -53,5 +51,9 @@ public class PacketHandler {
 
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
+    }
+
+    public static <MSG> void sendToTracking(MSG message, Entity entity) {
+        INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), message);
     }
 }

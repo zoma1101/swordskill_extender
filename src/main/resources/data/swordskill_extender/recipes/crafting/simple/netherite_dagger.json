@@ -1,0 +1,9 @@
+{
+    "type": "minecraft:smithing_trim",
+    "template": "minecraft:netherite_upgrade_smithing_template",
+    "base": "swordskill_extender:diamond_dagger",
+    "addition": "minecraft:netherite_ingot",
+    "result": {
+        "id": "swordskill_extender:netherite_dagger"
+    }
+}

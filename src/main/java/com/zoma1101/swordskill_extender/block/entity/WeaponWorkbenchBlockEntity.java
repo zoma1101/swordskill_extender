@@ -8,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -30,15 +29,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class WeaponWorkbenchBlockEntity extends BlockEntity implements MenuProvider {
-    // クラフト処理中かどうかを防ぐフラグ
     private boolean isCrafting = false;
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(7) {
+    // 25入力 + 1出力 = 26スロット
+    private final ItemStackHandler itemHandler = new ItemStackHandler(26) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
-            // 入力スロット(0-5)が変更された場合、出力スロットを更新する
-            if (!isCrafting && slot < 6 && level != null && !level.isClientSide) {
+            // 入力スロット(0-24)が変更された場合、出力スロットを更新する
+            if (!isCrafting && slot < 25 && level != null && !level.isClientSide) {
                 updateOutput();
             }
         }
@@ -47,73 +46,43 @@ public class WeaponWorkbenchBlockEntity extends BlockEntity implements MenuProvi
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     protected final ContainerData data;
 
-    private ResourceLocation selectedRecipeId = null;
-
-    // progress関連は不要になりましたが、ContainerDataの互換性のために残すか、ダミーにします
-    private int progress = 0;
-    private int maxProgress = 0;
-
     public WeaponWorkbenchBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.WEAPON_WORKBENCH_BE.get(), pPos, pBlockState);
-
         this.data = new SimpleContainerData(3) {
             @Override
-            public int get(int pIndex) {
-                return 0;
-            }
+            public int get(int pIndex) { return 0; }
             @Override
-            public void set(int pIndex, int pValue) {
-            }
+            public void set(int pIndex, int pValue) {}
         };
     }
 
-    public void setSelectedRecipe(ResourceLocation recipeId) {
-        this.selectedRecipeId = recipeId;
-        setChanged();
-        // レシピが変更されたら出力を再計算
-        if (level != null && !level.isClientSide) {
-            updateOutput();
-        }
-    }
-
-    // tickメソッドでのクラフトロジックは削除します
     public void tick(Level level, BlockPos pos, BlockState state) {
         // 何もしない
     }
 
-    // 出力スロットの内容を更新する（プレビュー表示）
+    // 全レシピを走査してマッチするものを探す
     private void updateOutput() {
         if (level == null) return;
 
-        if (selectedRecipeId == null) {
-            itemHandler.setStackInSlot(6, ItemStack.EMPTY);
-            return;
-        }
+        Optional<WeaponWorkbenchRecipe> match = level.getRecipeManager()
+                .getAllRecipesFor(WeaponWorkbenchRecipe.Type.INSTANCE).stream()
+                .filter(this::canCraft)
+                .findFirst();
 
-        Optional<WeaponWorkbenchRecipe> recipeOpt = level.getRecipeManager()
-                .byKey(selectedRecipeId)
-                .filter(r -> r.getType() == WeaponWorkbenchRecipe.Type.INSTANCE)
-                .map(r -> (WeaponWorkbenchRecipe) r);
-
-        if (recipeOpt.isPresent()) {
-            WeaponWorkbenchRecipe recipe = recipeOpt.get();
-            if (canCraft(recipe)) {
-                // クラフト可能なら完成品をセット（まだ消費はしない）
-                ItemStack result = recipe.getResultItem(level.registryAccess()).copy();
-                itemHandler.setStackInSlot(6, result);
-            } else {
-                itemHandler.setStackInSlot(6, ItemStack.EMPTY);
-            }
+        if (match.isPresent()) {
+            ItemStack result = match.get().getResultItem(level.registryAccess()).copy();
+            itemHandler.setStackInSlot(25, result);
         } else {
-            itemHandler.setStackInSlot(6, ItemStack.EMPTY);
+            itemHandler.setStackInSlot(25, ItemStack.EMPTY);
         }
     }
 
     private boolean canCraft(WeaponWorkbenchRecipe recipe) {
-        // 入力スロットのチェックのみ行う（出力スロットの空きチェックは上書きするので不要）
         NonNullList<ItemStack> ingredients = recipe.getInputs();
-        if (ingredients.size() > 6) return false;
+        // レシピの材料数がスロット数(25)を超えていないか
+        if (ingredients.size() > 25) return false;
 
+        // 各スロットと材料を比較
         for (int i = 0; i < ingredients.size(); i++) {
             ItemStack required = ingredients.get(i);
             ItemStack input = itemHandler.getStackInSlot(i);
@@ -125,30 +94,25 @@ public class WeaponWorkbenchBlockEntity extends BlockEntity implements MenuProvi
         return true;
     }
 
-    // Menuから呼ばれる：アイテムを取り出した時に素材を消費する
     public void craftItem() {
-        if (selectedRecipeId == null || level == null) return;
+        if (level == null) return;
 
-        Optional<WeaponWorkbenchRecipe> recipeOpt = level.getRecipeManager()
-                .byKey(selectedRecipeId)
-                .filter(r -> r.getType() == WeaponWorkbenchRecipe.Type.INSTANCE)
-                .map(r -> (WeaponWorkbenchRecipe) r);
+        // 現在の状態にマッチするレシピを再取得
+        Optional<WeaponWorkbenchRecipe> match = level.getRecipeManager()
+                .getAllRecipesFor(WeaponWorkbenchRecipe.Type.INSTANCE).stream()
+                .filter(this::canCraft)
+                .findFirst();
 
-        if (recipeOpt.isPresent()) {
-            WeaponWorkbenchRecipe recipe = recipeOpt.get();
-
-            // フラグを立てて onContentsChanged による updateOutput のループを防ぐ
+        if (match.isPresent()) {
+            WeaponWorkbenchRecipe recipe = match.get();
             isCrafting = true;
 
-            // 素材を消費
             NonNullList<ItemStack> ingredients = recipe.getInputs();
             for (int i = 0; i < ingredients.size(); i++) {
                 itemHandler.extractItem(i, ingredients.get(i).getCount(), false);
             }
 
             isCrafting = false;
-
-            // 消費後の状態で再度出力スロットを更新（連続作成のため）
             updateOutput();
         }
     }
@@ -187,9 +151,6 @@ public class WeaponWorkbenchBlockEntity extends BlockEntity implements MenuProvi
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("inventory", itemHandler.serializeNBT());
-        if (selectedRecipeId != null) {
-            pTag.putString("weapon_workbench.selected_recipe", selectedRecipeId.toString());
-        }
         super.saveAdditional(pTag);
     }
 
@@ -197,11 +158,8 @@ public class WeaponWorkbenchBlockEntity extends BlockEntity implements MenuProvi
     public void load(CompoundTag pTag) {
         super.load(pTag);
         itemHandler.deserializeNBT(pTag.getCompound("inventory"));
-        if (itemHandler.getSlots() != 7) {
-            itemHandler.setSize(7);
-        }
-        if (pTag.contains("weapon_workbench.selected_recipe")) {
-            selectedRecipeId = ResourceLocation.parse(pTag.getString("weapon_workbench.selected_recipe"));
+        if (itemHandler.getSlots() != 26) {
+            itemHandler.setSize(26);
         }
     }
 }

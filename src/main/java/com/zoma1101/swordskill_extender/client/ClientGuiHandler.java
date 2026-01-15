@@ -26,6 +26,7 @@ import java.util.Map;
 @Mod.EventBusSubscriber(modid = Swordskill_extender.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ClientGuiHandler {
 
+
     private static final ResourceLocation WIDGETS_LOCATION = ResourceLocation.parse("textures/gui/widgets.png");
 
     @SubscribeEvent
@@ -38,17 +39,15 @@ public class ClientGuiHandler {
 
         if (screen instanceof SwordSkillSelectionScreen skillScreen) {
             renderSkillRequirements(event.getGuiGraphics(), skillScreen);
-            // ★追加: 熟練度解放ボタンの描画
             renderProficiencyUnlockButton(event.getGuiGraphics(), skillScreen, event.getMouseX(), event.getMouseY());
         }
     }
 
-    // ★追加: マウスクリックイベントでボタンの動作を処理
     @SubscribeEvent
     public static void onScreenMouseClick(ScreenEvent.MouseButtonPressed.Pre event) {
         if (event.getScreen() instanceof SwordSkillSelectionScreen skillScreen) {
             if (tryClickUnlockButton(skillScreen, event.getMouseX(), event.getMouseY(), event.getButton())) {
-                event.setCanceled(true); // イベントをキャンセルして他の処理を防ぐ
+                event.setCanceled(true);
             }
         }
     }
@@ -93,47 +92,37 @@ public class ClientGuiHandler {
         }
     }
 
-    // ★修正: 解放対象のスキルIDを取得するヘルパーメソッド (派生スキル対応)
     private static int getTargetSkillId(SwordSkillSelectionScreen screen) {
         int selectedIndex = screen.selectedSkillIndex;
 
-        // 1. 未習得ならそのスキル自身が対象
         if (!screen.unlockedSkills.contains(selectedIndex)) {
             return selectedIndex;
         }
 
-        // 2. 習得済みの場合、派生スキル(TRANSFORM)のチェック
         SkillData skill = SwordSkillRegistry.SKILLS.get(selectedIndex);
         if (skill != null && skill.getType() == SkillData.SkillType.TRANSFORM) {
             int checkIndex = selectedIndex;
             while (true) {
                 int nextIndex = checkIndex + 1;
-                // 範囲外チェック
                 if (nextIndex >= SwordSkillRegistry.SKILLS.size()) break;
 
                 SkillData nextSkill = SwordSkillRegistry.SKILLS.get(nextIndex);
                 if (nextSkill == null) break;
 
-                // ★修正: 先に未習得かどうかをチェックする
-                // 未習得の派生スキルを見つけたらそれを返す (これが解放対象)
                 if (!screen.unlockedSkills.contains(nextIndex)) {
                     return nextIndex;
                 }
 
-                // 習得済みの場合、これがチェーンの最後(TRANSFORM_FINISH)なら終了
                 if (nextSkill.getType() == SkillData.SkillType.TRANSFORM_FINISH) break;
 
-                // まだ続くなら次へ (TRANSFORMなど)
                 checkIndex = nextIndex;
             }
         }
 
-        return -1; // 解放すべきスキルなし
+        return -1;
     }
 
     private static void renderSkillRequirements(GuiGraphics guiGraphics, SwordSkillSelectionScreen screen) {
-        // ★修正: ターゲットとなるスキルIDを取得して判定
-        // これにより、派生スキルが対象の場合、その派生スキルの要件が表示されます
         int targetId = getTargetSkillId(screen);
         if (targetId == -1) return;
 
@@ -190,21 +179,16 @@ public class ClientGuiHandler {
         }
     }
 
-    // ★追加: 熟練度解放ボタンの描画処理
     private static void renderProficiencyUnlockButton(GuiGraphics graphics, SwordSkillSelectionScreen screen, int mouseX, int mouseY) {
-        // ★修正: ターゲットとなるスキルIDを取得して判定
         int targetId = getTargetSkillId(screen);
         if (targetId == -1) return;
 
         SkillData skill = SwordSkillRegistry.SKILLS.get(targetId);
         if (skill == null) return;
 
-        // 熟練度要件がないスキルには表示しない
         Map<String, Object> data = skill.getAdditionalData();
         if (!data.containsKey("proficiency_req")) return;
 
-        // ボタンの位置: メインのアンロックボタン(幅160)の右隣に配置
-        // メインボタンは width/2 - 80 から width/2 + 80 まで
         int btnX = screen.width / 2 + 85;
         int btnY = screen.height - 40;
         int btnW = 20;
@@ -212,31 +196,24 @@ public class ClientGuiHandler {
 
         boolean hovered = mouseX >= btnX && mouseX < btnX + btnW && mouseY >= btnY && mouseY < btnY + btnH;
 
-        // バニラのボタンテクスチャを使用 (widgets.png)
-        // 通常: 46, ホバー: 66
         int v = 46 + (hovered ? 2 : 1) * 20;
 
-        // ボタンの左半分と右半分を描画して、幅20のボタンを作る
         graphics.blit(WIDGETS_LOCATION, btnX, btnY, 0, v, btnW / 2, btnH);
         graphics.blit(WIDGETS_LOCATION, btnX + btnW / 2, btnY, 200 - btnW / 2, v, btnW / 2, btnH);
 
-        // "XP" という文字を描画
-        int color = 0x80FF80; // 薄緑色
-        if (!hovered) color = 0xFFFFFF; // 通常時は白
+        int color = 0x80FF80;
+        if (!hovered) color = 0xFFFFFF;
 
         graphics.drawCenteredString(Minecraft.getInstance().font, "XP", btnX + btnW / 2, btnY + (btnH - 8) / 2, color);
 
-        // ホバー時のツールチップ
         if (hovered) {
             graphics.renderTooltip(Minecraft.getInstance().font, Component.translatable("gui.swordskill_extender.unlock_proficiency"), mouseX, mouseY);
         }
     }
 
-    // ★追加: クリック判定とパケット送信
     private static boolean tryClickUnlockButton(SwordSkillSelectionScreen screen, double mouseX, double mouseY, int button) {
-        if (button != 0) return false; // 左クリックのみ
+        if (button != 0) return false;
 
-        // ★修正: ターゲットとなるスキルIDを取得して判定
         int targetId = getTargetSkillId(screen);
         if (targetId == -1) return false;
 
@@ -252,10 +229,7 @@ public class ClientGuiHandler {
         int btnH = 20;
 
         if (mouseX >= btnX && mouseX < btnX + btnW && mouseY >= btnY && mouseY < btnY + btnH) {
-            // クリック音を再生
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-
-            // サーバーへアンロック要求パケットを送信 (ターゲットIDを送信)
             PacketHandler.sendToServer(new ServerboundUnlockSkillPacket(targetId));
             return true;
         }

@@ -29,7 +29,6 @@ public class ClientboundUnlockSkillResultPacket {
             // クライアント側でのみ実行
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
                 Minecraft mc = Minecraft.getInstance();
-                // 現在開いている画面がスキル選択画面なら、ロック解除済みリストに追加して表示を更新する
                 if (mc.screen instanceof SwordSkillSelectionScreen screen) {
                     screen.unlockedSkills.add(this.skillId);
                 }

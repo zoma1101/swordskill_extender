@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        "minecraft:gold_ingot",
+        "minecraft:gold_ingot",
+        "minecraft:stick"
+    ],
+    "result": {
+        "id": "swordskill_extender:gold_rapier",
+        "count": 1
+    }
+}
