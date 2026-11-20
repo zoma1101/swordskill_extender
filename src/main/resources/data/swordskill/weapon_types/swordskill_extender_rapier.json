@@ -1,0 +1,11 @@
+{
+  "name": "swordskill_extender_rapier",
+  "item": [
+    "swordskill_extender:stone_rapier",
+    "swordskill_extender:iron_rapier",
+    "swordskill_extender:gold_rapier",
+    "swordskill_extender:diamond_rapier",
+    "swordskill_extender:netherite_rapier"
+  ],
+  "weapontype": ["RAPIER"]
+}

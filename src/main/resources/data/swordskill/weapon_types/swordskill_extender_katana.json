@@ -1,0 +1,11 @@
+{
+  "name": "swordskill_extender_katana",
+  "item": [
+    "swordskill_extender:stone_katana",
+    "swordskill_extender:iron_katana",
+    "swordskill_extender:gold_katana",
+    "swordskill_extender:diamond_katana",
+    "swordskill_extender:netherite_katana"
+  ],
+  "weapontype": ["KATANA"]
+}
