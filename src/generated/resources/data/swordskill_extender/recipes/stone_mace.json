@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    },
+    "*": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#*#",
+    " / "
+  ],
+  "result": {
+    "item": "swordskill_extender:stone_mace"
+  },
+  "show_notification": true
+}

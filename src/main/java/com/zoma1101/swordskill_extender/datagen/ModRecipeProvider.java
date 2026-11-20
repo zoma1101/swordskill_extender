@@ -20,36 +20,36 @@ public class ModRecipeProvider extends RecipeProvider {
     @Override
     protected void buildRecipes(@NotNull Consumer<FinishedRecipe> pWriter) {
         // 1. 鉄 (Iron)
-        generateWeaponRecipes(pWriter, Ingredient.of(Items.IRON_INGOT), "iron",
-                ModItems.IRON_GREATSWORD, ModItems.IRON_SPEAR, ModItems.IRON_MACE,
+        generateWeaponRecipes(pWriter, Ingredient.of(Items.IRON_INGOT), Ingredient.of(Items.GOLD_INGOT), "iron",
+                ModItems.IRON_GREATSWORD, ModItems.IRON_MACE,
                 ModItems.IRON_RAPIER, ModItems.IRON_DAGGER, ModItems.IRON_KATANA,
-                ModItems.IRON_CLAW, ModItems.IRON_SCYTHE, ModItems.IRON_BATTLEAXE);
+                ModItems.IRON_CLAW, ModItems.IRON_SCYTHE);
 
         // 2. 石 (Stone)
-        generateWeaponRecipes(pWriter, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS), "stone",
-                ModItems.STONE_GREATSWORD, ModItems.STONE_SPEAR, ModItems.STONE_MACE,
+        generateWeaponRecipes(pWriter, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS), Ingredient.of(Items.IRON_INGOT), "stone",
+                ModItems.STONE_GREATSWORD, ModItems.STONE_MACE,
                 ModItems.STONE_RAPIER, ModItems.STONE_DAGGER, ModItems.STONE_KATANA,
-                ModItems.STONE_CLAW, ModItems.STONE_SCYTHE, ModItems.STONE_BATTLEAXE);
+                ModItems.STONE_CLAW, ModItems.STONE_SCYTHE);
 
         // 3. 金 (Gold)
-        generateWeaponRecipes(pWriter, Ingredient.of(Items.GOLD_INGOT), "gold",
-                ModItems.GOLD_GREATSWORD, ModItems.GOLD_SPEAR, ModItems.GOLD_MACE,
+        generateWeaponRecipes(pWriter, Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Items.DIAMOND), "gold",
+                ModItems.GOLD_GREATSWORD, ModItems.GOLD_MACE,
                 ModItems.GOLD_RAPIER, ModItems.GOLD_DAGGER, ModItems.GOLD_KATANA,
-                ModItems.GOLD_CLAW, ModItems.GOLD_SCYTHE, ModItems.GOLD_BATTLEAXE);
+                ModItems.GOLD_CLAW, ModItems.GOLD_SCYTHE);
 
         // 4. ダイヤモンド (Diamond)
-        generateWeaponRecipes(pWriter, Ingredient.of(Items.DIAMOND), "diamond",
-                ModItems.DIAMOND_GREATSWORD, ModItems.DIAMOND_SPEAR, ModItems.DIAMOND_MACE,
+        generateWeaponRecipes(pWriter, Ingredient.of(Items.DIAMOND), Ingredient.of(Items.NETHERITE_INGOT), "diamond",
+                ModItems.DIAMOND_GREATSWORD, ModItems.DIAMOND_MACE,
                 ModItems.DIAMOND_RAPIER, ModItems.DIAMOND_DAGGER, ModItems.DIAMOND_KATANA,
-                ModItems.DIAMOND_CLAW, ModItems.DIAMOND_SCYTHE, ModItems.DIAMOND_BATTLEAXE);
+                ModItems.DIAMOND_CLAW, ModItems.DIAMOND_SCYTHE);
 
         generateNetheriteRecipes(pWriter);
     }
 
-    private void generateWeaponRecipes(Consumer<FinishedRecipe> pWriter, Ingredient material, String materialName,
-                                       RegistryObject<Item> greatsword, RegistryObject<Item> spear, RegistryObject<Item> mace,
+    private void generateWeaponRecipes(Consumer<FinishedRecipe> pWriter, Ingredient material, Ingredient centerMaterial, String materialName,
+                                       RegistryObject<Item> greatsword, RegistryObject<Item> mace,
                                        RegistryObject<Item> rapier, RegistryObject<Item> dagger, RegistryObject<Item> katana,
-                                       RegistryObject<Item> claw, RegistryObject<Item> scythe, RegistryObject<Item> battleaxe) {
+                                       RegistryObject<Item> claw, RegistryObject<Item> scythe) {
         // (省略: 以前の内容と同じ)
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, greatsword.get())
                 .pattern(" # ")
@@ -60,20 +60,12 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_" + materialName, has(Items.STICK))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, spear.get())
-                .pattern("  #")
-                .pattern(" / ")
-                .pattern("/  ")
-                .define('#', material)
-                .define('/', Items.STICK)
-                .unlockedBy("has_" + materialName, has(Items.STICK))
-                .save(pWriter);
-
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, mace.get())
                 .pattern(" # ")
-                .pattern("# #")
+                .pattern("#*#")
                 .pattern(" / ")
                 .define('#', material)
+                .define('*', centerMaterial)
                 .define('/', Items.STICK)
                 .unlockedBy("has_" + materialName, has(Items.STICK))
                 .save(pWriter);
@@ -85,8 +77,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, dagger.get())
-                .pattern("#")
-                .pattern("/")
+                .pattern(" #")
+                .pattern("/ ")
                 .define('#', material)
                 .define('/', Items.STICK)
                 .unlockedBy("has_" + materialName, has(Items.STICK))
@@ -110,22 +102,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, scythe.get())
-                .pattern(" ##")
-                .pattern(" / ")
+                .pattern("###")
+                .pattern("#/ ")
                 .pattern("/  ")
                 .define('#', material)
                 .define('/', Items.STICK)
                 .unlockedBy("has_" + materialName, has(Items.STICK))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, battleaxe.get())
-                .pattern("###")
-                .pattern("#/#")
-                .pattern(" / ")
-                .define('#', material)
-                .define('/', Items.STICK)
-                .unlockedBy("has_" + materialName, has(Items.STICK))
-                .save(pWriter);
     }
 
     // ★修正: 引数を削除し、メソッド内で直接 ModItems の変数を参照する
@@ -134,14 +118,12 @@ public class ModRecipeProvider extends RecipeProvider {
         Ingredient addition = Ingredient.of(Items.NETHERITE_INGOT);
 
         smithing(pWriter, template, ModItems.DIAMOND_GREATSWORD, addition, ModItems.NETHERITE_GREATSWORD);
-        smithing(pWriter, template, ModItems.DIAMOND_SPEAR, addition, ModItems.NETHERITE_SPEAR);
         smithing(pWriter, template, ModItems.DIAMOND_MACE, addition, ModItems.NETHERITE_MACE);
         smithing(pWriter, template, ModItems.DIAMOND_RAPIER, addition, ModItems.NETHERITE_RAPIER);
         smithing(pWriter, template, ModItems.DIAMOND_DAGGER, addition, ModItems.NETHERITE_DAGGER);
         smithing(pWriter, template, ModItems.DIAMOND_KATANA, addition, ModItems.NETHERITE_KATANA);
         smithing(pWriter, template, ModItems.DIAMOND_CLAW, addition, ModItems.NETHERITE_CLAW);
         smithing(pWriter, template, ModItems.DIAMOND_SCYTHE, addition, ModItems.NETHERITE_SCYTHE);
-        smithing(pWriter, template, ModItems.DIAMOND_BATTLEAXE, addition, ModItems.NETHERITE_BATTLEAXE);
     }
 
     // 個別の鍛冶台レシピ生成メソッド

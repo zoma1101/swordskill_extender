@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " # ",
+    "###",
+    " / "
+  ],
+  "result": {
+    "item": "swordskill_extender:stone_greatsword"
+  },
+  "show_notification": true
+}

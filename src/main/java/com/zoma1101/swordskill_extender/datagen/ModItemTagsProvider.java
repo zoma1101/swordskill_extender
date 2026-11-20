@@ -24,14 +24,12 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
         // 1. 武器種ごとの独自タグを定義
         TagKey<Item> greatswords = createTag("greatswords");
-        TagKey<Item> spears = createTag("spears");
         TagKey<Item> maces = createTag("maces");
         TagKey<Item> rapiers = createTag("rapiers");
         TagKey<Item> daggers = createTag("daggers");
         TagKey<Item> katanas = createTag("katanas");
         TagKey<Item> claws = createTag("claws");
         TagKey<Item> scythes = createTag("scythes");
-        TagKey<Item> battleaxes = createTag("battleaxes");
 
         // ★追加: 両手持ち武器用のタグ定義
         TagKey<Item> twoHandedWeapons = createTag("two_handed_weapons");
@@ -40,11 +38,6 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(greatswords).add(
                 ModItems.IRON_GREATSWORD.get(), ModItems.STONE_GREATSWORD.get(), ModItems.GOLD_GREATSWORD.get(),
                 ModItems.DIAMOND_GREATSWORD.get(), ModItems.NETHERITE_GREATSWORD.get()
-        );
-
-        tag(spears).add(
-                ModItems.IRON_SPEAR.get(), ModItems.STONE_SPEAR.get(), ModItems.GOLD_SPEAR.get(),
-                ModItems.DIAMOND_SPEAR.get(), ModItems.NETHERITE_SPEAR.get()
         );
 
         tag(maces).add(
@@ -77,31 +70,20 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 ModItems.DIAMOND_SCYTHE.get(), ModItems.NETHERITE_SCYTHE.get()
         );
 
-        tag(battleaxes).add(
-                ModItems.IRON_BATTLEAXE.get(), ModItems.STONE_BATTLEAXE.get(), ModItems.GOLD_BATTLEAXE.get(),
-                ModItems.DIAMOND_BATTLEAXE.get(), ModItems.NETHERITE_BATTLEAXE.get()
-        );
-
-        // ★追加: 両手持ちタグに、大剣・鎌・両手斧のタグを登録
+        // 両手持ちタグに、大剣・鎌のタグを登録
         tag(twoHandedWeapons)
                 .addTag(greatswords)
-                .addTag(scythes)
-                .addTag(battleaxes);
+                .addTag(scythes);
 
         // 3. バニラのタグに統合 (互換性確保)
         tag(ItemTags.SWORDS)
                 .addTag(greatswords)
-                .addTag(spears)
                 .addTag(maces)
                 .addTag(rapiers)
                 .addTag(daggers)
                 .addTag(katanas)
                 .addTag(claws)
-                .addTag(scythes)
-                .addTag(battleaxes);
-
-        // 両手斧は「斧」としても機能するようにする
-        tag(ItemTags.AXES).addTag(battleaxes);
+                .addTag(scythes);
     }
 
     // タグ作成用のヘルパーメソッド

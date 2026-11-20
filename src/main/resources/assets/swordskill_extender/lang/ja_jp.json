@@ -1,91 +1,53 @@
 {
-  "block.swordskill_extender.weapon_workbench": "武器作業台",
   "creativetab.swordskill_extender_tab": "ソードスキル拡張",
-  "creativetab.swordskill_extender.scroll_tab": "秘伝の巻物",
-
-
-  "tooltip.swordskill_extender.proficiency_scroll.usage": "武器を持ってスニーク右クリックで使用",
-  "tooltip.swordskill_extender.proficiency_scroll.amount": "熟練度上昇量: %s",
-  "message.swordskill_extender.proficiency_increased": "%sの熟練度が %s 上昇しました！",
-  "message.swordskill_extender.skill_unlocked": "スキル習得！: %s",
-
-  "item.swordskill_extender.skill_scroll": "秘伝の巻物",
-  "tooltip.swordskill_extender.skill_scroll_skill": "習得可能スキル: %s",
-  "tooltip.swordskill_extender.skill_scroll_empty": "スキルが記録されていません",
-  "message.swordskill_extender.scroll_invalid": "この巻物は無効です。",
-  "message.swordskill_extender.skill_not_found": "スキルが見つかりません。",
-  "message.swordskill_extender.skill_already_unlocked": "スキル「%s」は既に習得しています。",
-
 
   "weapon_type.swordskill_extender.greatsword": "大剣",
-  "weapon_type.swordskill_extender.spear": "槍",
   "weapon_type.swordskill_extender.mace": "メイス",
   "weapon_type.swordskill_extender.rapier": "レイピア",
   "weapon_type.swordskill_extender.dagger": "ダガー",
   "weapon_type.swordskill_extender.katana": "刀",
   "weapon_type.swordskill_extender.claw": "爪",
   "weapon_type.swordskill_extender.scythe": "鎌",
-  "weapon_type.swordskill_extender.battleaxe": "戦斧",
   "weapon_type.swordskill_extender.one_handed_sword": "片手剣",
   "weapon_type.swordskill_extender.sword": "片手剣",
-  "weapon_type.swordskill_extender.dualsword": "二刀流",
-  "message.swordskill_extender.not_enough_proficiency": "熟練度が足りません！ (%s: 必要XP %s)",
-
-  "gui.swordskill_extender.req_proficiency": "習得に必要な熟練度:",
-  "gui.swordskill_extender.req_proficiency_format": "%s: %s",
-  "gui.swordskill_extender.requirement": "習得条件",
-
-
-
-  "item.swordskill_extender.proficiency_scroll": "熟練度の書",
 
   "item.swordskill_extender.iron_greatsword": "鉄の大剣",
-  "item.swordskill_extender.iron_spear": "鉄の槍",
   "item.swordskill_extender.iron_mace": "鉄製メイス",
   "item.swordskill_extender.iron_rapier": "鉄のレイピア",
   "item.swordskill_extender.iron_dagger": "シンプルダガー",
   "item.swordskill_extender.iron_katana": "鉄の刀",
   "item.swordskill_extender.iron_claw": "鉄の爪",
   "item.swordskill_extender.iron_scythe": "鉄の鎌",
-  "item.swordskill_extender.iron_battleaxe": "鉄の両手斧",
 
   "item.swordskill_extender.stone_greatsword": "石の大剣",
-  "item.swordskill_extender.stone_spear": "石の槍",
   "item.swordskill_extender.stone_mace": "石製メイス",
   "item.swordskill_extender.stone_rapier": "石のレイピア",
   "item.swordskill_extender.stone_dagger": "石のダガー",
   "item.swordskill_extender.stone_katana": "石の刀",
   "item.swordskill_extender.stone_claw": "石の爪",
   "item.swordskill_extender.stone_scythe": "石の鎌",
-  "item.swordskill_extender.stone_battleaxe": "石の両手斧",
 
   "item.swordskill_extender.gold_greatsword": "金の大剣",
-  "item.swordskill_extender.gold_spear": "金の槍",
   "item.swordskill_extender.gold_mace": "金製メイス",
   "item.swordskill_extender.gold_rapier": "金のレイピア",
   "item.swordskill_extender.gold_dagger": "金のダガー",
   "item.swordskill_extender.gold_katana": "金の刀",
   "item.swordskill_extender.gold_claw": "金の爪",
   "item.swordskill_extender.gold_scythe": "金の鎌",
-  "item.swordskill_extender.gold_battleaxe": "金の両手斧",
 
   "item.swordskill_extender.diamond_greatsword": "ダイヤの大剣",
-  "item.swordskill_extender.diamond_spear": "ダイヤの槍",
   "item.swordskill_extender.diamond_mace": "ダイヤ製メイス",
   "item.swordskill_extender.diamond_rapier": "ダイヤのレイピア",
   "item.swordskill_extender.diamond_dagger": "ダイヤのダガー",
   "item.swordskill_extender.diamond_katana": "ダイヤの刀",
   "item.swordskill_extender.diamond_claw": "ダイヤの爪",
   "item.swordskill_extender.diamond_scythe": "ダイヤの鎌",
-  "item.swordskill_extender.diamond_battleaxe": "ダイヤの両手斧",
 
   "item.swordskill_extender.netherite_greatsword": "ネザライトの大剣",
-  "item.swordskill_extender.netherite_spear": "ネザライトの槍",
   "item.swordskill_extender.netherite_mace": "ネザライト製メイス",
   "item.swordskill_extender.netherite_rapier": "ネザライトのレイピア",
   "item.swordskill_extender.netherite_dagger": "ネザライトのダガー",
   "item.swordskill_extender.netherite_katana": "ネザライトの刀",
   "item.swordskill_extender.netherite_claw": "ネザライトの爪",
-  "item.swordskill_extender.netherite_scythe": "ネザライトの鎌",
-  "item.swordskill_extender.netherite_battleaxe": "ネザライトの両手斧"
+  "item.swordskill_extender.netherite_scythe": "ネザライトの鎌"
 }
