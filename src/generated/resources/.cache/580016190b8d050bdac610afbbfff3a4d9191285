@@ -1,0 +1,10 @@
+// 1.21.1	2026-11-20T13:44:38.6142027	Tags for minecraft:item mod id swordskill_extender
+fb8104b12b4983203a3a848183d8e8e3eb798427 data/minecraft/tags/item/swords.json
+eebe0e7f6d4a5a4729c19363fd2da56af749515c data/swordskill_extender/tags/item/claws.json
+b442fc757e82e79a0bda695f721075d134be78ec data/swordskill_extender/tags/item/daggers.json
+72f603f9312b34db49cd03c3ebd3b4730b4c44c8 data/swordskill_extender/tags/item/greatswords.json
+fcf6d1df184fb1eeeb5b851e6a734a64ebe8b400 data/swordskill_extender/tags/item/katanas.json
+efe8161ec502c4535ae8cb2e5d2911bf576be6ac data/swordskill_extender/tags/item/maces.json
+5ab90d5a10e27d7a26c738859a9b9f142549314c data/swordskill_extender/tags/item/rapiers.json
+01f8e4f68f97f5ba28ca27a501ba4e40c09f2f01 data/swordskill_extender/tags/item/scythes.json
+e74bade1b50cfd46bae176f80bb26da79c1257d0 data/swordskill_extender/tags/item/two_handed_weapons.json

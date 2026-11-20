@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        "minecraft:diamond",
+        "minecraft:diamond",
+        "minecraft:stick"
+    ],
+    "result": {
+        "id": "swordskill_extender:diamond_rapier",
+        "count": 1
+    }
+}

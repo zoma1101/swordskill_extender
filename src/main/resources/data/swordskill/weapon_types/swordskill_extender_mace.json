@@ -1,0 +1,11 @@
+{
+  "name": "mace",
+  "item": [
+    "swordskill_extender:iron_mace",
+    "swordskill_extender:stone_mace",
+    "swordskill_extender:gold_mace",
+    "swordskill_extender:diamond_mace",
+    "swordskill_extender:netherite_mace"
+  ],
+  "weapontype": ["MACE"]
+}

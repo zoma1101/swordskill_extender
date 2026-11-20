@@ -1,0 +1,66 @@
+{
+  "parent": "minecraft:item/handheld",
+  "display": {
+    "firstperson_lefthand": {
+      "rotation": [
+        -1,
+        90,
+        -25
+      ],
+      "translation": [
+        1.13,
+        4.7,
+        -0.12
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        25
+      ],
+      "translation": [
+        1.13,
+        4.45,
+        -0.12
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        -55
+      ],
+      "scale": [
+        1.2,
+        1.2,
+        1.2
+      ],
+      "translation": [
+        0,
+        6.25,
+        0.5
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        55
+      ],
+      "scale": [
+        1.2,
+        1.2,
+        1.2
+      ],
+      "translation": [
+        0.5,
+        6.5,
+        0.5
+      ]
+    }
+  },
+  "textures": {
+    "layer0": "swordskill_extender:item/netherite_greatsword"
+  }
+}

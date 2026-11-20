@@ -1,0 +1,66 @@
+{
+  "parent": "minecraft:item/handheld",
+  "display": {
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        -25
+      ],
+      "translation": [
+        1.13,
+        3.2,
+        -1.12
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        25
+      ],
+      "translation": [
+        1.13,
+        3.2,
+        -1.12
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        -22.5,
+        90,
+        0
+      ],
+      "scale": [
+        2,
+        2,
+        2
+      ],
+      "translation": [
+        0,
+        10.5,
+        6
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        -23.25,
+        -90,
+        0
+      ],
+      "scale": [
+        2,
+        2,
+        2
+      ],
+      "translation": [
+        0,
+        12.25,
+        5.75
+      ]
+    }
+  },
+  "textures": {
+    "layer0": "swordskill_extender:item/diamond_scythe"
+  }
+}

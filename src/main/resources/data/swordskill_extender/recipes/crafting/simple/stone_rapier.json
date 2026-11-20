@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        "minecraft:cobblestone",
+        "minecraft:cobblestone",
+        "minecraft:stick"
+    ],
+    "result": {
+        "id": "swordskill_extender:stone_rapier",
+        "count": 1
+    }
+}

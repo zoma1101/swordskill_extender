@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "  #",
+        "S# ",
+        "/S "
+    ],
+    "key": {
+        "#": "minecraft:cobblestone",
+        "S": "minecraft:stone_button",
+        "/": "minecraft:stick"
+    },
+    "result": {
+        "id": "swordskill_extender:stone_katana",
+        "count": 1
+    }
+}

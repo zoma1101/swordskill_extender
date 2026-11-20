@@ -1,0 +1,11 @@
+{
+  "name": "claw",
+  "item": [
+    "swordskill_extender:iron_claw",
+    "swordskill_extender:stone_claw",
+    "swordskill_extender:gold_claw",
+    "swordskill_extender:diamond_claw",
+    "swordskill_extender:netherite_claw"
+  ],
+  "weapontype": ["CLAW"]
+}

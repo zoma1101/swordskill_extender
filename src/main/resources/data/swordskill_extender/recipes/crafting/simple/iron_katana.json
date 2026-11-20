@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "  i",
+        "Si ",
+        "/S "
+    ],
+    "key": {
+        "i": "minecraft:iron_ingot",
+        "S": "minecraft:stone_button",
+        "/": "minecraft:stick"
+    },
+    "result": {
+        "id": "swordskill_extender:iron_katana",
+        "count": 1
+    }
+}
